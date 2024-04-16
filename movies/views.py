@@ -86,7 +86,7 @@ def movie_by_id(request, id):
         return get_movie_by_id(request,id)
     if request.method == 'DELETE':
         return delete_movie_by_id(request,id)
-    if request.method == 'DELETE':
+    if request.method == 'PUT':
         return modify_movie_by_id(request,id)
 
 @api_view(['GET'])
