@@ -55,7 +55,7 @@ def get_all_movies(request):
             'error': str(e)
         }, status=500)
 
-@api_view(['GET'])
+
 def get_movie_by_id(request, id):
     try:
         movie = Movie.objects.get(id=id)
@@ -75,11 +75,19 @@ def get_movie_by_id(request, id):
             'error': str(e)
         }, status=500)
 
-@api_view(['DELETE'])
 def delete_movie_by_id(request, id):
     movie = Movie.objects.get(id=id)
     movie.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'DELETE','PUT'])
+def movie_by_id(request, id):
+    if request.method == 'GET':
+        return get_movie_by_id(request,id)
+    if request.method == 'DELETE':
+        return delete_movie_by_id(request,id)
+    if request.method == 'DELETE':
+        return modify_movie_by_id(request,id)
 
 @api_view(['GET'])
 def search_movies(request):
@@ -91,8 +99,6 @@ def search_movies(request):
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
-
-@api_view(['PUT'])
 def modify_movie_by_id(request, id):
     movie = Movie.objects.get(id=id)
     serializer = MovieSerializer(movie, data=request.data)

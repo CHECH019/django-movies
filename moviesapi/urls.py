@@ -18,10 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from movies.views import (
     get_all_movies,
-    get_movie_by_id,
-    delete_movie_by_id,
+    movie_by_id,
     search_movies,
-    modify_movie_by_id,
     create_movie,
     get_summary,
     get_top_movies,
@@ -31,10 +29,8 @@ from movies.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('movies/', get_all_movies, name='get_all_movies'),
-    path('movies/<int:id>/', get_movie_by_id, name='get_movie_by_id'),
-    path('movies/<int:id>/', delete_movie_by_id, name='delete_movie_by_id'),
+    path('movies/<int:id>/', movie_by_id, name='get_movie_by_id'),
     path('search/', search_movies, name='search_movies'),
-    path('movies/<int:id>/', modify_movie_by_id, name='modify_movie_by_id'),
     path('movies/', create_movie, name='create_movie'),
     path('summary/', get_summary, name='get_summary'),
     path('top/', get_top_movies, name='get_top_movies'),
