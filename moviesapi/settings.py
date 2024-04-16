@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'movies',
     'rest_framework'
 ]
@@ -130,3 +131,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+GDAL_LIBRARY_PATH = 'C:/OSGeo4W/bin/gdal308.dll'

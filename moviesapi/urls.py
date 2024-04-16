@@ -23,7 +23,8 @@ from movies.views import (
     create_movie,
     get_summary,
     get_top_movies,
-    welcome
+    welcome,
+    get_geojson
 )
 
 urlpatterns = [
@@ -34,5 +35,6 @@ urlpatterns = [
     path('movies/', create_movie, name='create_movie'),
     path('summary/', get_summary, name='get_summary'),
     path('top/', get_top_movies, name='get_top_movies'),
-    path('', welcome, name='welcome')
+    path('', welcome, name='welcome'),
+    path('geojson/', get_geojson, name='get_geojson')
 ]

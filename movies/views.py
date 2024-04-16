@@ -5,6 +5,7 @@ from .models import Movie
 from .serializers import MovieSerializer
 from django.core.paginator import Paginator
 from django.db.models import Count
+from django.contrib.gis.geos import Point
 
 # Create your views here.
 
@@ -145,3 +146,39 @@ def get_top_movies(request):
     top_movies = Movie.objects.order_by('-rating')[:5]
     top_movies_data = [{'title': movie.title, 'rating': movie.rating} for movie in top_movies]
     return Response(top_movies_data)
+
+@api_view(['GET'])
+def get_geojson(request):
+        try:
+            movies = Movie.objects.all()
+            features = []
+
+            for movie in movies:
+                properties = {
+                    "titulo": movie.title,
+                    "calificación": movie.rating,
+                    "país": movie.country
+                }
+                geometry = Point(movie.longitude, movie.latitude) 
+                geometry_tuple = (geometry.x, geometry.y)
+                feature = {
+                    "type": "Feature",
+                    "properties": properties,
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": geometry_tuple
+                    }
+                }
+                features.append(feature)
+
+            geojson = {
+                "type": "FeatureCollection",
+                "features": features
+            }
+
+            return Response(geojson, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({
+                'success': False,
+                'error': str(e)
+            }, status=500)
